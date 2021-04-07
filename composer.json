@@ -1,0 +1,15 @@
+{
+    "name": "maani/phpmvc",
+    "authors": [
+        {
+            "name": "Mani",
+            "email": "mani@test.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}
