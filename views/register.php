@@ -4,14 +4,14 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-control" name="fname">
+                <input type="text" class="form-control" name="firstname">
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-control" name="lname">
+                <input type="text" class="form-control" name="lastname">
             </div>
         </div>
 
@@ -32,7 +32,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="confirm-password" class="form-control" name="password">
+                <input type="password" class="form-control" name="confirmpassword">
             </div>
         </div>
 
