@@ -1,43 +1,30 @@
 <h1>Register</h1>
-<form action="" method="POST">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>First Name</label>
-                <input type="text" class="form-control" name="firstname">
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Last Name</label>
-                <input type="text" class="form-control" name="lastname">
-            </div>
-        </div>
-
-        <div class="col-12">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="text" class="form-control" name="email">
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Confirm Password</label>
-                <input type="password" class="form-control" name="confirmpassword">
-            </div>
-        </div>
-
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+<?php $form = \app\core\form\Form::begin('', 'POST'); ?>
+<div class="row">
+    <div class="col-md-6">
+        <?php echo $form->field($model, 'firstname', 'First Name'); ?>
     </div>
-</form>
+
+    <div class="col-md-6">
+        <?php echo $form->field($model, 'lastname', 'Last Name'); ?>
+    </div>
+
+    <div class="col-12">
+        <?php echo $form->field($model, 'email', 'Email'); ?>
+    </div>
+
+    <div class="col-md-6">
+        <?php echo $form->field($model, 'password', 'Password')->passwordField(); ?>
+    </div>
+
+    <div class="col-md-6">
+        <?php echo $form->field($model, 'confirmpassword', 'Confirm Password')->passwordField(); ?>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+    </div>
+</div>
+<?php \app\core\form\Form::end(); ?>
