@@ -10,7 +10,7 @@ abstract class Model
     public const RULE_MAX = 'max';
     public const RULE_MATCH = 'match';
 
-    // public const RULE_UNIQUE = 'unique';
+    public const RULE_UNIQUE = 'unique';
 
     public function loadData($data)
     {
@@ -55,21 +55,25 @@ abstract class Model
                 if ($ruleName === self::RULE_MATCH  && $value !== $this->{$rule['match']}) {
                     $this->addError($attribute, self::RULE_MATCH, $rule);
                 }
+
+                if ($ruleName === self::RULE_UNIQUE) {
+                    $className = $rule['class'];
+                    $unique_attribute = $rule['attribute'] ?? $attribute;
+                    $tableName = $className::tableName();
+
+                    $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $unique_attribute = :attr");
+                    $statement->bindValue(":attr", $value);
+                    $statement->execute();
+                    $record = $statement->fetchObject();
+
+                    if ($record) {
+                        $this->addError($attribute, self::RULE_UNIQUE, ['field' => $attribute]);
+                    }
+                }
             }
         }
 
         return empty($this->errors);
-    }
-
-    public function addError(string $attribute, string $rule, $params = [])
-    {
-        $message = $this->errorMessages()[$rule] ?? '';
-
-        foreach ($params as $key => $value) {
-            $message = str_replace("{{$key}}", $value, $message);
-        }
-
-        $this->errors[$attribute][] = $message;
     }
 
     public function errorMessages()
@@ -80,7 +84,23 @@ abstract class Model
             self::RULE_MIN => 'Min length of this field must be {min}',
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be same as {match}',
+            self::RULE_UNIQUE => '${field} already exists.',
         ];
+    }
+
+    public function errorMessage($rule)
+    {
+        return $this->errorMessages()[$rule];
+    }
+
+    public function addError(string $attribute, string $rule, $params = [])
+    {
+        $params['field'] ??= $attribute;
+        $errorMessage = $this->errorMessage($rule);
+        foreach ($params as $key => $value) {
+            $errorMessage = str_replace("{{$key}}", $value, $errorMessage);
+        }
+        $this->errors[$attribute][] = $errorMessage;
     }
 
     public function hasError($attribute)
@@ -90,6 +110,7 @@ abstract class Model
 
     public function getFirstError($attribute)
     {
-        return $this->errors[$attribute][0] ?? false;
+        $errors = $this->errors[$attribute] ?? [];
+        echo $errors[0] ?? '';
     }
 }

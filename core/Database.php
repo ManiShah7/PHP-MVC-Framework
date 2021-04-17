@@ -73,4 +73,9 @@ class Database
         ");
         $statement->execute();
     }
+
+    public function prepare($sql)
+    {
+        return $this->pdo->prepare($sql);
+    }
 }
