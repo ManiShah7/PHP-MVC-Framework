@@ -18,8 +18,8 @@ class Form
         echo '</form>';
     }
 
-    public function field(Model $model, $attribute, $fieldName)
+    public function field(Model $model, $attribute)
     {
-        return new Field($model, $attribute, $fieldName);
+        return new Field($model, $attribute);
     }
 }

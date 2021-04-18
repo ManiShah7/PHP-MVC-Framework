@@ -2,23 +2,23 @@
 <?php $form = \app\core\form\Form::begin('', 'POST'); ?>
 <div class="row">
     <div class="col-md-6">
-        <?php echo $form->field($model, 'firstname', 'First Name'); ?>
+        <?php echo $form->field($model, 'firstname'); ?>
     </div>
 
     <div class="col-md-6">
-        <?php echo $form->field($model, 'lastname', 'Last Name'); ?>
+        <?php echo $form->field($model, 'lastname'); ?>
     </div>
 
     <div class="col-12">
-        <?php echo $form->field($model, 'email', 'Email'); ?>
+        <?php echo $form->field($model, 'email'); ?>
     </div>
 
     <div class="col-md-6">
-        <?php echo $form->field($model, 'password', 'Password')->passwordField(); ?>
+        <?php echo $form->field($model, 'password')->passwordField(); ?>
     </div>
 
     <div class="col-md-6">
-        <?php echo $form->field($model, 'confirmpassword', 'Confirm Password')->passwordField(); ?>
+        <?php echo $form->field($model, 'confirmpassword')->passwordField(); ?>
     </div>
 
     <div class="col-12">
