@@ -31,7 +31,7 @@ class Field
             <label>%s</label>
             <input type="%s" class="form-control %s" value="%s" name="%s">
             <div class="invalid-feedback">
-                %3
+                %s
             </div>
         </div>
         ',
