@@ -1,6 +1,7 @@
 <?php
 
-use app\core\Application; ?>
+use app\core\Application;
+?>
 
 <!doctype html>
 <html lang="en">
@@ -33,14 +34,22 @@ use app\core\Application; ?>
                 </li>
             </ul>
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
-            </ul>
+            <?php if (Application::isGuest()) : ?>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                </ul>
+            <?php else : ?>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Welccome <?= Application::$app->user->getDisplayName(); ?> (Logout) </a>
+                    </li>
+                </ul>
+            <?php endif; ?>
         </div>
     </nav>
     <div class="container">

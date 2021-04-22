@@ -39,7 +39,6 @@ class LoginForm extends Model
             return false;
         }
 
-        exit;
         return Application::$app->login($user);
     }
 }
