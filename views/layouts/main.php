@@ -14,7 +14,7 @@ use app\core\Application;
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>PHP MVC Framework</title>
 </head>
 
 <body>
@@ -45,6 +45,10 @@ use app\core\Application;
                 </ul>
             <?php else : ?>
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Welccome <?= Application::$app->user->getDisplayName(); ?> (Logout) </a>
                     </li>
