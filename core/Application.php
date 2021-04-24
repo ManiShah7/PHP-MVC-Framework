@@ -15,6 +15,7 @@ class Application
     public Database $db;
     public Session $session;
     public ?DbModel $user;
+    public View $view;
 
     public function __construct($rootPath, array $config)
     {
@@ -25,6 +26,7 @@ class Application
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         $this->session = new Session();
+        $this->view = new View();
 
         $this->db = new Database($config['db']);
 
@@ -40,7 +42,14 @@ class Application
 
     public function run()
     {
-        echo $this->router->resolve();
+        try {
+            echo $this->router->resolve();
+        } catch (\Exception $e) {
+            $this->response->setStatusCode($e->getCode());
+            echo $this->view->renderView('_error', [
+                'exception' => $e
+            ]);
+        }
     }
 
     public function getController(): \app\core\Controller

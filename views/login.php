@@ -12,7 +12,7 @@
         <?php echo $form->field($model, 'email'); ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-12">
         <?php echo $form->field($model, 'password')->passwordField(); ?>
     </div>
 
