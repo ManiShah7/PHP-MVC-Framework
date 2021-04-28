@@ -6,6 +6,7 @@ use app\core\Model;
 
 abstract class BaseField
 {
+    public Model $model;
     public string $type;
     public string $attribute;
 
@@ -14,8 +15,6 @@ abstract class BaseField
         $this->model = $model;
         $this->attribute = $attribute;
     }
-
-    abstract public function renderInput(): string;
 
     public function __toString()
     {
@@ -34,4 +33,6 @@ abstract class BaseField
             $this->model->getFirstError($this->attribute)
         );
     }
+
+    abstract public function renderInput(): string;
 }

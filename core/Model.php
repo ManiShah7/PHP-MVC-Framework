@@ -42,7 +42,7 @@ abstract class Model
             foreach ($rules as $rule) {
                 $ruleName = $rule;
 
-                if (!is_string($ruleName)) {
+                if (!is_string($rule)) {
                     $ruleName = $rule[0];
                 }
 
@@ -55,16 +55,16 @@ abstract class Model
                 }
 
                 if ($ruleName === self::RULE_MIN  && strlen($value) < $rule['min']) {
-                    $this->addErrorForRule($attribute, self::RULE_MIN, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MIN, ['min' => $rule['min']]);
                 }
 
                 if ($ruleName === self::RULE_MAX  && strlen($value) > $rule['max']) {
-                    $this->addErrorForRule($attribute, self::RULE_MAX, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MAX);
                 }
 
                 if ($ruleName === self::RULE_MATCH  && $value !== $this->{$rule['match']}) {
                     $rule['match'] = $this->getLabel($rule['match']);
-                    $this->addErrorForRule($attribute, self::RULE_MATCH, $rule);
+                    $this->addErrorForRule($attribute, self::RULE_MATCH, ['match' => $rule['match']]);
                 }
 
                 if ($ruleName === self::RULE_UNIQUE) {
@@ -72,13 +72,13 @@ abstract class Model
                     $unique_attribute = $rule['attribute'] ?? $attribute;
                     $tableName = $className::tableName();
 
-                    $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $unique_attribute = :attr");
-                    $statement->bindValue(":attr", $value);
+                    $statement = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $unique_attribute = :$unique_attribute");
+                    $statement->bindValue(":$unique_attribute", $value);
                     $statement->execute();
                     $record = $statement->fetchObject();
 
                     if ($record) {
-                        $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['field' => $this->getLabel($attribute)]);
+                        $this->addErrorForRule($attribute, self::RULE_UNIQUE);
                     }
                 }
             }
@@ -104,15 +104,14 @@ abstract class Model
         return $this->errorMessages()[$rule];
     }
 
-    private function addErrorForRule(string $attribute, string $rule, $params = [])
+    protected function addErrorForRule(string $attribute, string $rule, $params = [])
     {
-        $message = $this->errorMessages()[$rule] ?? '';
-        // $params['field'] ??= $attribute;
-        // $errorMessage = $this->errorMessage($rule);
+        $params['field'] ??= $attribute;
+        $errorMessage = $this->errorMessage($rule);
         foreach ($params as $key => $value) {
-            $message = str_replace("{{$key}}", $value, $message);
+            $errorMessage = str_replace("{{$key}}", $value, $errorMessage);
         }
-        $this->errors[$attribute][] = $message;
+        $this->errors[$attribute][] = $errorMessage;
     }
 
     public function addError(string $attribute, string $message)

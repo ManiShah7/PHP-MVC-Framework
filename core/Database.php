@@ -44,8 +44,6 @@ class Database
             $newMigrations[] = $migration;
         }
 
-        exit;
-
         if (!empty($newMigrations)) {
             $this->saveMigrations($newMigrations);
         } else {

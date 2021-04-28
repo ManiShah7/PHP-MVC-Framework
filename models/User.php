@@ -18,12 +18,12 @@ class User extends UserModel
     public string $password = '';
     public string $confirmpassword = '';
 
-    public function tableName(): string
+    public static function tableName(): string
     {
         return 'users';
     }
 
-    public function primaryKey(): string
+    public static function primaryKey(): string
     {
         return 'id';
     }

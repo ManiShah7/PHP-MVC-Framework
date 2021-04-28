@@ -43,7 +43,6 @@ class AuthController extends Controller
             if ($user->validate() && $user->register()) {
                 Application::$app->session->setFlash('success', 'Thanks for registering.');
                 Application::$app->response->redirect('/');
-                exit;
             }
 
             return $this->render('register', [
